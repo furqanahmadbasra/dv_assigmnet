@@ -24,8 +24,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Sports Performance Dashboard")
-st.write("Visualizations based on Cleaned Excel Data")
+st.title(" Dashboard")
+st.write("Visualizations based on  Data")
 
 
 st.subheader("Parallel Coordinates Plot")
