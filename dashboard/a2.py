@@ -9,6 +9,14 @@ import seaborn as sns
 from pandas.plotting import parallel_coordinates
 
 # ------------------------- LOAD DATA -------------------------
+import os
+import pandas as pd
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(BASE_DIR, "database_filled1 anonymised.xlsx")
+
+df = pd.read_excel(file_path)
+
 file_path = "database_filled1 anonymised.xlsx"
 df = pd.read_excel(file_path, sheet_name="Cleaned_Data", engine="openpyxl")
 
