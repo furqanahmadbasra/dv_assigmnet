@@ -20,7 +20,8 @@ import pandas as pd
 # file_path = "database_filled1 anonymised.xlsx"
 # df = pd.read_excel(file_path, sheet_name="Cleaned_Data", engine="openpyxl")
 
-csv_url = "https://drive.google.com/file/d/1D12vfWH1zMaSnlr7UOgfWdD6zVJlVu5F/view?usp=sharing"
+csv_url = "https://drive.google.com/uc?export=download&id=1D12vfWH1zMaSnlr7UOgfWdD6zVJlVu5F"
+# csv_url = "https://drive.google.com/file/d/1D12vfWH1zMaSnlr7UOgfWdD6zVJlVu5F/view?usp=sharing"
 
 df = pd.read_csv(csv_url)
 
