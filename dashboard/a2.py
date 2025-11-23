@@ -8,20 +8,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pandas.plotting import parallel_coordinates
 
-# ------------------------- LOAD DATA -------------------------
+
 import os
 import pandas as pd
 
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# file_path = os.path.join(BASE_DIR, "database_filled1 anonymised.xlsx")
 
-# df = pd.read_excel(file_path)
-
-# file_path = "database_filled1 anonymised.xlsx"
-# df = pd.read_excel(file_path, sheet_name="Cleaned_Data", engine="openpyxl")
 
 csv_url = "https://drive.google.com/uc?export=download&id=1D12vfWH1zMaSnlr7UOgfWdD6zVJlVu5F"
-# csv_url = "https://drive.google.com/file/d/1D12vfWH1zMaSnlr7UOgfWdD6zVJlVu5F/view?usp=sharing"
 
 df = pd.read_csv(csv_url)
 
@@ -34,9 +27,7 @@ st.markdown(
 st.title("Sports Performance Dashboard")
 st.write("Visualizations based on Cleaned Excel Data")
 
-# # -------------------------------------------------------------
-# #   1️⃣ PARALLEL COORDINATES PLOT (Prestige + Groups + Countries)
-# # -------------------------------------------------------------
+
 st.subheader("Parallel Coordinates Plot")
 
 pcs_cols = [
@@ -47,7 +38,6 @@ pcs_cols = [
 
 pcs_df = df[pcs_cols].copy()
 
-# Normalize prestige
 prestige_norm = (
     pcs_df["Game Prestige Score"] - pcs_df["Game Prestige Score"].min()
 ) / (pcs_df["Game Prestige Score"].max() - pcs_df["Game Prestige Score"].min())
@@ -58,7 +48,6 @@ pcs_df["PrestigeBucket"] = pd.qcut(
     labels=["Very Low", "Low", "Medium", "High", "Very High"]
 )
 
-# Color map
 cmap = plt.cm.plasma
 unique_labels = pcs_df["PrestigeBucket"].unique()
 color_map = {
@@ -66,7 +55,6 @@ color_map = {
     for i, label in enumerate(unique_labels)
 }
 
-# ⭐ MUCH BIGGER X-SCALE
 fig1 = plt.figure(figsize=(50, 20), dpi=160)
 
 parallel_coordinates(
@@ -102,17 +90,13 @@ st.pyplot(fig1)
 
 
 
-# -------------------------------------------------------------
-#   2️⃣ SCATTER PLOT: Prestige vs Medals (With Country Filter)
-# -------------------------------------------------------------
+
 
 st.subheader("Scatter Plot: Prestige vs Total Medals")
 
-# COUNTRY DROPDOWN
 country_cols = ["PK", "IND", "IR", "CN", "UK", "GER", "AUS", "CAN", "USA"]
 selected_country = st.selectbox("Select Country for Medal Coloring", country_cols)
 
-# Prepare figure
 fig2 = plt.figure(figsize=(12, 7))
 
 df["Group_Total"] = df["Group1"] + df["Group2"] + df["Group3"] + df["Group4"]
@@ -121,7 +105,7 @@ sns.scatterplot(
     x="Game Prestige Score",
     y="Total Medals",
     size="Group_Total",
-    hue=selected_country,       # COUNTRY FILTER APPLIED HERE
+    hue=selected_country,       
     data=df,
     sizes=(20, 600),
     alpha=0.7,
@@ -148,16 +132,12 @@ st.pyplot(fig2)
 
 
 
-# -------------------------------------------------------------
-#   3️⃣ LINE PLOT: PK vs Group1 Across Prestige Levels
-# -------------------------------------------------------------
+
 
 st.subheader("Line Plot: Pakistan vs Group1 Performance Across Prestige Levels")
 
-# Sort by prestige score for smoother line
 df_sorted = df.sort_values("Game Prestige Score")
 
-# Create big figure
 fig3 = plt.figure(figsize=(14, 8), dpi=150)
 
 sns.lineplot(
@@ -182,7 +162,6 @@ plt.ylabel("Medals Won", fontsize=14)
 plt.legend(fontsize=12)
 plt.grid(True, alpha=0.3)
 
-# Display in Streamlit
 st.pyplot(fig3)
 
 
@@ -195,21 +174,16 @@ st.pyplot(fig3)
 
 
 
-# -------------------------------------------------------------
-#   4️⃣ REGRESSION PLOT: Pakistan vs Selected Country
-# -------------------------------------------------------------
 
 st.subheader("Regression Trend: Pakistan vs Other Countries")
 
-# Small hover icon on right side → using Streamlit expander
-with st.expander("⚙️ Select Country for Regression Plot"):
+with st.expander(" Select Country for Regression Plot"):
     reg_country = st.selectbox(
         "Choose a country:",
         ["IND", "IR", "CN", "UK", "GER", "AUS", "CAN", "USA"],
         index=0
     )
 
-# Create small regression figure
 fig4 = plt.figure(figsize=(7, 5), dpi=130)
 
 sns.regplot(
@@ -228,10 +202,6 @@ plt.tight_layout()
 st.pyplot(fig4)
 
 
-
-# -------------------------------------------------------------
-#   5️⃣ BAR CHART: Average Medals Per Country
-# -------------------------------------------------------------
 
 st.subheader("Average Medals per Country (Across All Games)")
 
@@ -266,15 +236,12 @@ st.pyplot(fig5)
 
 
 
-# -------------------------------------------------------------
-#   6️⃣ SCATTER + REGRESSION: Pakistan Medals vs Prestige Score
-# -------------------------------------------------------------
+
 
 st.subheader("Pakistan Medals vs Prestige Score (Negative Trend)")
 
 fig6 = plt.figure(figsize=(10, 6), dpi=150)
 
-# Scatter points
 sns.scatterplot(
     x="PK",
     y="Game Prestige Score",
@@ -283,7 +250,6 @@ sns.scatterplot(
     alpha=0.7
 )
 
-# Regression trend line
 sns.regplot(
     x="PK",
     y="Game Prestige Score",
