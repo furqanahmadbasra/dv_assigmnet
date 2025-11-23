@@ -15,9 +15,9 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(BASE_DIR, "database_filled1 anonymised.xlsx")
 
-df = pd.read_excel(file_path)
+# df = pd.read_excel(file_path)
 
-file_path = "database_filled1 anonymised.xlsx"
+# file_path = "database_filled1 anonymised.xlsx"
 df = pd.read_excel(file_path, sheet_name="Cleaned_Data", engine="openpyxl")
 
 st.markdown(
